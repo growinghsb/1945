@@ -99,6 +99,9 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Game\06.ResourceManager</Filter>
     </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Game\05.TimeManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Game\06.ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Game\05.TimeManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #include "CoreManager.h"
 #include "InputManager.h"
 #include "ResourceManager.h"
+#include "TimeManager.h"
 
 CoreManager* CoreManager::mInstance = nullptr;
 bool CoreManager::mPlay = true;
@@ -41,13 +42,15 @@ bool CoreManager::init(HINSTANCE hInstance)
 	HBITMAP oldBitmap = (HBITMAP)SelectObject(mBackDC, mBackBitmap);
 	DeleteObject(oldBitmap);
 
+	TimeManager::getInstance()->init();
 	ResourceManager::getInstance()->init();
-
+	
 	return true;
 }
 
 void CoreManager::update()
 {
+	TimeManager::getInstance()->update(mHWnd);
 	InputManager::getInstance()->update();
 }
 
