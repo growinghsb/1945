@@ -1,6 +1,7 @@
 #include "CoreManager.h"
+#include "InputManager.h"
 
-CoreManager* CoreManager::mCoreManager = nullptr;
+CoreManager* CoreManager::mInstance = nullptr;
 bool CoreManager::mPlay = true;
 
 CoreManager::CoreManager()
@@ -18,24 +19,6 @@ CoreManager::~CoreManager()
 	ReleaseDC(mHWnd, mHDC);
 	DeleteDC(mBackDC);
 	DeleteObject(mBackBitmap);
-}
-
-CoreManager* CoreManager::getInstance()
-{
-	if (nullptr == mCoreManager)
-	{
-		mCoreManager = new CoreManager;
-	}
-	return mCoreManager;
-}
-
-void CoreManager::deleteInstance()
-{
-	if (nullptr != mCoreManager)
-	{
-		delete mCoreManager;
-		mCoreManager = nullptr;
-	}
 }
 
 bool CoreManager::init(HINSTANCE hInstance)
@@ -62,6 +45,7 @@ bool CoreManager::init(HINSTANCE hInstance)
 
 void CoreManager::update()
 {
+	InputManager::getInstance()->update();
 }
 
 void CoreManager::render(HDC backDC)
@@ -85,7 +69,6 @@ int CoreManager::run()
 			render(mBackDC);
 		}
 	}
-
 	return (int)msg.wParam;
 }
 

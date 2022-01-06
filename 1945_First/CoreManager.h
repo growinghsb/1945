@@ -5,11 +5,7 @@
 class CoreManager
 {
 public:
-	static CoreManager* getInstance();
-	
-
-	static void deleteInstance();
-	
+	SINGLE(CoreManager);
 
 	static LRESULT CALLBACK    wndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -25,7 +21,7 @@ private:
 	ATOM                myRegisterClass();
 	bool                createWindow();
 
-	static CoreManager* mCoreManager;
+	static CoreManager* mInstance;
 	static bool			mPlay;
 
 	HINSTANCE mHInstance;

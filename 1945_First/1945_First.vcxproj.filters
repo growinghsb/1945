@@ -81,6 +81,9 @@
     <ClInclude Include="Enum.h">
       <Filter>Game\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Game\03.InputManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -88,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="CoreManager.cpp">
       <Filter>Game\02.Core</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Game\03.InputManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
