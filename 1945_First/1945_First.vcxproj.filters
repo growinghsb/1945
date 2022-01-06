@@ -13,6 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{e2df6a64-81f7-47c7-ba4f-fc295cf92913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\01.Header">
+      <UniqueIdentifier>{90cef60e-1cc5-41ef-aa74-9e74d802ccb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\02.Core">
+      <UniqueIdentifier>{8ab3bb98-5b7e-42dd-8fce-70731aae087a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03.InputManager">
+      <UniqueIdentifier>{70815ac8-b10d-482e-b58f-ae7a6e93e867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04.EventManager">
+      <UniqueIdentifier>{9e7127ba-d342-4198-b272-dd9a817cc30e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05.TimeManager">
+      <UniqueIdentifier>{21fc5bf7-cfc5-4c67-b143-fc37763f111c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06.ResourceManager">
+      <UniqueIdentifier>{77738b3d-a401-4ca9-9682-fc688856e927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\07.CollisionManager">
+      <UniqueIdentifier>{e2c884b7-beb6-4f0f-89e6-63aec39dedd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\08.StageManager">
+      <UniqueIdentifier>{4b0200c0-9935-4c59-aa01-e511d6150b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\09.Object">
+      <UniqueIdentifier>{12840815-cd25-445c-b6b3-b549a2e8b3b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\10.Stage">
+      <UniqueIdentifier>{24dcde3e-87ff-43d2-b4b3-f2d0973b596e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\11.Component">
+      <UniqueIdentifier>{c32617f1-035d-4c04-96c9-7823c5ba4229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\12.Layer">
+      <UniqueIdentifier>{4996d79e-0db9-4d83-9e66-95a7d8853ea1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -27,10 +66,28 @@
     <ClInclude Include="1945_First.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreManager.h">
+      <Filter>Game\02.Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>Game\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>Game\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>Game\01.Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="1945_First.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreManager.cpp">
+      <Filter>Game\02.Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
