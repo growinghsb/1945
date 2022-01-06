@@ -65,3 +65,19 @@ enum class KEY_STATE
 	BACK, 
 	NONE
 };
+
+enum class EVENT_TYPE
+{
+	STAGE_CHANGE,
+	CREATE_OBJ,
+	DELETE_OBJ,
+	END
+};
+
+enum class CHANGE_STAGE_TYPE 
+{
+	INTRO, 
+	NEXT, 
+	PREV, 
+	END
+};

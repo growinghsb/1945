@@ -28,8 +28,6 @@ private:
 	InputManager();
 	~InputManager() = default;
 
-	static InputManager* mInstance;
-	
 	int mKeyCodeBoard[(UINT)KEY_LIST::END];
 	KEY_STATE mKeyStates[(UINT)KEY_LIST::END];
 };

@@ -1,7 +1,5 @@
 #include "InputManager.h"
 
-InputManager* InputManager::mInstance = nullptr;
-
 InputManager::InputManager()
 	: mKeyCodeBoard{
 'A',
@@ -54,38 +52,38 @@ VK_RBUTTON
 }
 , mKeyStates{}
 {
-	for (int i = 0; i < (UINT)KEY_LIST::END; ++i) 
+	for (int i = 0; i < (UINT)KEY_LIST::END; ++i)
 	{
-		mKeyStates[i] = {KEY_STATE::NONE};
-	}	
+		mKeyStates[i] = { KEY_STATE::NONE };
+	}
 }
 
 void InputManager::update()
 {
-	for(int i = 0; i < (UINT)KEY_LIST::END; ++i)
+	for (int i = 0; i < (UINT)KEY_LIST::END; ++i)
 	{
-		if (GetAsyncKeyState(mKeyCodeBoard[i]) & 0x8000) 
+		if (GetAsyncKeyState(mKeyCodeBoard[i]) & 0x8000)
 		{
-			if (mKeyStates[i] == KEY_STATE::NONE) 
+			if (mKeyStates[i] == KEY_STATE::NONE)
 			{
 				mKeyStates[i] = KEY_STATE::TIC;
 				continue;
 			}
-			
+
 			if (mKeyStates[i] == KEY_STATE::TIC)
 			{
 				mKeyStates[i] = KEY_STATE::PRESS;
 				continue;
 			}
 		}
-		else 
+		else
 		{
-			if(mKeyStates[i] == KEY_STATE::TIC ||
+			if (mKeyStates[i] == KEY_STATE::TIC ||
 				mKeyStates[i] == KEY_STATE::PRESS)
 			{
 				mKeyStates[i] = KEY_STATE::BACK;
 			}
-			else 
+			else
 			{
 				mKeyStates[i] = KEY_STATE::NONE;
 			}

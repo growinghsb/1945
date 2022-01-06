@@ -149,11 +149,16 @@
     <ClInclude Include="CResource.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enum.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Func.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IntroStage.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -161,10 +166,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CResource.cpp" />
+    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="Func.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="IntroStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CoreManager.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>

@@ -26,6 +26,21 @@ public:
 		return nullptr;
 	}
 
+	vector<Texture*> containsTexture(const wchar_t* tag) const
+	{
+		vector<Texture*> textures;
+		textures.reserve(8);
+
+		for (const auto& pair : mResources) 
+		{
+			if (ContainsString(tag, pair.first.c_str())) 
+			{
+				textures.push_back((Texture*)pair.second);
+			}
+		}
+		return textures;
+	}
+
 private:
 	void setAbsolutePath();
 	void setTextureNames();

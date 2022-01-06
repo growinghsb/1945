@@ -58,6 +58,12 @@
     <Filter Include="Game\06.ResourceManager\Textrue">
       <UniqueIdentifier>{74e4ed9d-7cdf-4b53-9074-da3c44739763}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\10.Stage\Stage">
+      <UniqueIdentifier>{c1ea8897-1be3-449e-abf3-8e29162cd036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\10.Stage\IntroStage">
+      <UniqueIdentifier>{718632a1-d940-4bb8-a29a-aed62123b5ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -102,6 +108,21 @@
     <ClInclude Include="TimeManager.h">
       <Filter>Game\05.TimeManager</Filter>
     </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Game\04.EventManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Game\10.Stage\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroStage.h">
+      <Filter>Game\10.Stage\IntroStage</Filter>
+    </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>Game\08.StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Func.h">
+      <Filter>Game\01.Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -124,6 +145,21 @@
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>Game\05.TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Game\04.EventManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Game\10.Stage\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroStage.cpp">
+      <Filter>Game\10.Stage\IntroStage</Filter>
+    </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>Game\08.StageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Func.cpp">
+      <Filter>Game\01.Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

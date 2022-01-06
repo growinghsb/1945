@@ -1,4 +1,5 @@
 #pragma once
+#pragma comment(lib, "Msimg32.lib")
 
 #include "1945_First.h"
 #include "framework.h"
@@ -6,6 +7,7 @@
 #include "Define.h"
 #include "Enum.h"
 #include "Struct.h"
+#include "Func.h"
 
 #include <crtdbg.h>
 

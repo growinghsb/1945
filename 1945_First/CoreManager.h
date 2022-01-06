@@ -19,6 +19,16 @@ public:
 		return mHDC;
 	}
 
+	HWND getHWnd() const 
+	{
+		return mHWnd;
+	}
+
+	RECT getWindow() const 
+	{
+		return mWindow;
+	}
+
 private:
 	CoreManager();
 	~CoreManager();

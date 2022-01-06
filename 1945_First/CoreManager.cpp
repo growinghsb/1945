@@ -2,6 +2,8 @@
 #include "InputManager.h"
 #include "ResourceManager.h"
 #include "TimeManager.h"
+#include "EventManager.h"
+#include "StageManager.h"
 
 CoreManager* CoreManager::mInstance = nullptr;
 bool CoreManager::mPlay = true;
@@ -44,7 +46,8 @@ bool CoreManager::init(HINSTANCE hInstance)
 
 	TimeManager::getInstance()->init();
 	ResourceManager::getInstance()->init();
-	
+	StageManager::getInstance()->init();
+
 	return true;
 }
 
@@ -52,10 +55,18 @@ void CoreManager::update()
 {
 	TimeManager::getInstance()->update(mHWnd);
 	InputManager::getInstance()->update();
+	StageManager::getInstance()->update();
 }
 
 void CoreManager::render(HDC backDC)
 {
+	// 오브젝트들이 그려질 백버퍼를 흰색 배경으로 깔아준다.
+	FillRect(mBackDC, &mWindow, (HBRUSH)(COLOR_WINDOW + 1));
+
+	StageManager::getInstance()->render(backDC);
+
+	// 항상 백버퍼에 있는 화면을 메인 버퍼로 복사해줘야 더블버퍼링 되어 화면이 보여진다.
+	BitBlt(mHDC, 0, 0, mWindow.right, mWindow.bottom, backDC, 0, 0, SRCCOPY);
 }
 
 int CoreManager::run()
@@ -73,6 +84,9 @@ int CoreManager::run()
 		{
 			update();
 			render(mBackDC);
+
+			// 랜더링 까지 끝난 뒤 이벤트를 처리한다.
+			EventManager::getInstance()->execute();
 		}
 	}
 	return (int)msg.wParam;
