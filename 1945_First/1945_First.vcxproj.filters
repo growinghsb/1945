@@ -52,6 +52,12 @@
     <Filter Include="Game\12.Layer">
       <UniqueIdentifier>{4996d79e-0db9-4d83-9e66-95a7d8853ea1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\06.ResourceManager\Resource">
+      <UniqueIdentifier>{d48ac507-1ca1-4e9c-a587-729df47c6c33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06.ResourceManager\Textrue">
+      <UniqueIdentifier>{74e4ed9d-7cdf-4b53-9074-da3c44739763}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -84,6 +90,15 @@
     <ClInclude Include="InputManager.h">
       <Filter>Game\03.InputManager</Filter>
     </ClInclude>
+    <ClInclude Include="CResource.h">
+      <Filter>Game\06.ResourceManager\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Game\06.ResourceManager\Textrue</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Game\06.ResourceManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -94,6 +109,15 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Game\03.InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CResource.cpp">
+      <Filter>Game\06.ResourceManager\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Game\06.ResourceManager\Textrue</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Game\06.ResourceManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

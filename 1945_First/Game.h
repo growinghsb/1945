@@ -23,3 +23,7 @@ using std::string;
 using std::wstring;
 using std::make_pair;
 using std::to_string;
+using std::remove;
+using std::cout;
+using std::cin;
+using std::endl;

@@ -14,6 +14,11 @@ public:
 	void render(HDC backDC);
 	int run();
 
+	HDC getMainDC() const
+	{
+		return mHDC;
+	}
+
 private:
 	CoreManager();
 	~CoreManager();

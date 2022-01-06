@@ -63,6 +63,5 @@ enum class KEY_STATE
 	TIC, 
 	PRESS, 
 	BACK, 
-	NONE, 
-	END
+	NONE
 };
