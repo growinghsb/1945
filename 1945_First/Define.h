@@ -6,5 +6,5 @@
 #define IS_PRESS(key) InputManager::getInstance()->isPress(key)
 #define IS_BACK(key)  InputManager::getInstance()->isBack(key)
 #define DS TimeManager::getInstance()->getDS()
-#define ADD_STAGE_CHANGE(eType, sChangeType) EventManager::getInstance()->addStageChange(eType, sChangeType)
+#define ADD_STAGE_CHANGE(eType, sChangeType) EventManager::getInstance()->addChangeStage(eType, sChangeType)
 #define COLOR_WHITE RGB(255, 255, 255)

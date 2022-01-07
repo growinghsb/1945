@@ -8,6 +8,8 @@
 CoreManager* CoreManager::mInstance = nullptr;
 bool CoreManager::mPlay = true;
 
+bool excuteTimer = false;
+
 CoreManager::CoreManager()
 	: mHInstance(nullptr)
 	, mHWnd(nullptr)
@@ -44,7 +46,6 @@ bool CoreManager::init(HINSTANCE hInstance)
 	HBITMAP oldBitmap = (HBITMAP)SelectObject(mBackDC, mBackBitmap);
 	DeleteObject(oldBitmap);
 
-	TimeManager::getInstance()->init();
 	ResourceManager::getInstance()->init();
 	StageManager::getInstance()->init();
 
@@ -53,7 +54,10 @@ bool CoreManager::init(HINSTANCE hInstance)
 
 void CoreManager::update()
 {
-	TimeManager::getInstance()->update(mHWnd);
+	if (excuteTimer) 
+	{
+		TimeManager::getInstance()->update(mHWnd);
+	}
 	InputManager::getInstance()->update();
 	StageManager::getInstance()->update();
 }

@@ -42,6 +42,7 @@ enum class KEY_LIST
 
 	ESCAPE,
 	SPACE,
+	ENTER,
 
 	LEFT,
 	TOP,
@@ -79,5 +80,24 @@ enum class CHANGE_STAGE_TYPE
 	INTRO, 
 	NEXT, 
 	PREV, 
+	END
+};
+
+enum class OBJ_TYPE 
+{
+	PLAYER, 
+	ENEMY, 
+	OBSTACLE, 
+	ITEM,
+	P_DEFAULT_BULLET, 
+	E_DEFAULT_BULLET,
+	END
+};
+
+enum class LAYER_TYPE
+{
+	//BACKGRAOUND,
+	OBJ,
+	//UI,
 	END
 };

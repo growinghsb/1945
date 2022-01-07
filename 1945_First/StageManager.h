@@ -3,6 +3,8 @@
 #include "Game.h"
 
 class Stage;
+class Player;
+class Texture;
 
 class StageManager
 {
@@ -14,6 +16,26 @@ public:
 	void render(HDC backDC);
 
 	void changeStage(CHANGE_STAGE_TYPE type);
+	
+	void setPlayerTexture(Texture* texture)
+	{
+		mPlayerTexture = texture;
+	}
+
+	void setPlayer(Player* player) 
+	{
+		mCurrentPlayer = player;
+	}
+
+	Texture* getTexture() const 
+	{
+		return mPlayerTexture;
+	}
+
+	Player* getPlayer() const 
+	{
+		return mCurrentPlayer;
+	}
 
 private:
 	StageManager();
@@ -21,5 +43,7 @@ private:
 	
 	vector<Stage*> mStages;
 	Stage* mCurrentStage;
+	Texture* mPlayerTexture;
+	Player* mCurrentPlayer;
 };
 

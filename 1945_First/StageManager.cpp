@@ -1,11 +1,19 @@
 #include "StageManager.h"
 #include "IntroStage.h"
+#include "PlayStage1.h"
 
 StageManager::StageManager()
-	: mStages{ new IntroStage(0) }
-	, mCurrentStage(mStages[0])
+	: mStages{}
+	, mCurrentStage(nullptr)
+	, mPlayerTexture(nullptr)
+	, mCurrentPlayer(nullptr)
 {
-	mStages.reserve(16);
+	mStages.reserve(8);
+
+	mStages.push_back(new IntroStage(0));
+	mStages.push_back(new PlayStage1(1));
+
+	mCurrentStage = mStages[0];
 }
 
 StageManager::~StageManager()
@@ -19,32 +27,23 @@ StageManager::~StageManager()
 
 void StageManager::init()
 {
-	for (auto element : mStages) 
-	{
-		element->init();
-	}
+	mCurrentStage->init();
 }
 
 void StageManager::update()
 {
-	for (auto element : mStages)
-	{
-		element->update();
-	}
+	mCurrentStage->update();
 }
 
 void StageManager::render(HDC backDC)
 {
-	for (auto element : mStages)
-	{
-		element->render(backDC);
-	}
+	mCurrentStage->render(backDC);
 }
 
 void StageManager::changeStage(CHANGE_STAGE_TYPE type)
 {
 	mCurrentStage->exit();
-	
+
 	int orderNum = mCurrentStage->getOrderNum();
 
 	switch (type)
@@ -62,6 +61,17 @@ void StageManager::changeStage(CHANGE_STAGE_TYPE type)
 		orderNum = 0;
 		break;
 	}
+
+	if (orderNum == mStages.size())
+	{
+		orderNum = (int)mStages.size() - 1;
+	}
+
+	if (orderNum < 0)
+	{
+		orderNum = 0;
+	}
+
 	mCurrentStage = mStages[orderNum];
 	mCurrentStage->enter();
 }

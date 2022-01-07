@@ -40,6 +40,7 @@ InputManager::InputManager()
 '9',
 VK_ESCAPE,
 VK_SPACE,
+VK_RETURN,
 VK_LEFT,
 VK_UP,
 VK_RIGHT,

@@ -147,6 +147,7 @@
     <ClInclude Include="1945_First.h" />
     <ClInclude Include="CoreManager.h" />
     <ClInclude Include="CResource.h" />
+    <ClInclude Include="DefaultBullet.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="EventManager.h" />
@@ -155,6 +156,11 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IntroStage.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="Obj.h" />
+    <ClInclude Include="ObjLayer.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayStage1.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Stage.h" />
@@ -166,12 +172,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CResource.cpp" />
+    <ClCompile Include="DefaultBullet.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="IntroStage.cpp" />
+    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CoreManager.cpp" />
+    <ClCompile Include="Obj.cpp" />
+    <ClCompile Include="ObjLayer.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayStage1.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageManager.cpp" />

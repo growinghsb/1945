@@ -19,5 +19,6 @@ public:
 
 private:
 	vector<Texture*> mPlayerTextures;
+	int mChoiceOrder;
 };
 

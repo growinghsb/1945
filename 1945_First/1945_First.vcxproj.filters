@@ -64,6 +64,33 @@
     <Filter Include="Game\10.Stage\IntroStage">
       <UniqueIdentifier>{718632a1-d940-4bb8-a29a-aed62123b5ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\09.Object\Object">
+      <UniqueIdentifier>{2fb95a1e-fa7a-43bc-b9d3-eca988265699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\09.Object\Player">
+      <UniqueIdentifier>{35381645-9012-4463-9e9a-6c9e583285ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\09.Object\Enemy">
+      <UniqueIdentifier>{ac856a22-b471-4210-96a2-2fc3306992db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\09.Object\Obstacle">
+      <UniqueIdentifier>{828e3fa0-9dd5-4f8b-a491-57e749b270a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\09.Object\Item">
+      <UniqueIdentifier>{ac5cfbca-7bed-4a02-a4bc-ef5db34613e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\10.Stage\PlayStage">
+      <UniqueIdentifier>{3670135f-84bd-4b71-845a-03feace3618d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\12.Layer\Layer">
+      <UniqueIdentifier>{eb78f8b6-19dc-45d0-b5c5-3eb05ae12f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\12.Layer\ObjLayer">
+      <UniqueIdentifier>{ec1cd0c9-2586-468c-9068-e9cbf3f5adfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\09.Object\Bullet">
+      <UniqueIdentifier>{97fc4762-5202-4917-80e7-b602b92eab60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -123,6 +150,24 @@
     <ClInclude Include="Func.h">
       <Filter>Game\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>Game\09.Object\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Game\09.Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayStage1.h">
+      <Filter>Game\10.Stage\PlayStage</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Game\12.Layer\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjLayer.h">
+      <Filter>Game\12.Layer\ObjLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultBullet.h">
+      <Filter>Game\09.Object\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -160,6 +205,24 @@
     </ClCompile>
     <ClCompile Include="Func.cpp">
       <Filter>Game\01.Header</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>Game\09.Object\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game\09.Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayStage1.cpp">
+      <Filter>Game\10.Stage\PlayStage</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Game\12.Layer\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjLayer.cpp">
+      <Filter>Game\12.Layer\ObjLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultBullet.cpp">
+      <Filter>Game\09.Object\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
