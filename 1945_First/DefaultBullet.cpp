@@ -1,12 +1,22 @@
 #include "DefaultBullet.h"
 #include "TimeManager.h"
 #include "Texture.h"
+#include "Component.h"
 
 DefaultBullet::DefaultBullet(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
 	: Obj(tag, pos, scale, texture, layer)
 	, mSpeed(700)
 	, mOffencePower(2) // 2 - 4 - 6 - 8 ∑Œ ¡ı∞°
 {
+}
+
+DefaultBullet::~DefaultBullet()
+{
+	for (auto component : mComponents) 
+	{
+		delete component;
+	}
+	mComponents.clear();
 }
 
 void DefaultBullet::update()

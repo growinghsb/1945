@@ -9,15 +9,25 @@ class Player :
 {
 public:
     Player(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer);
-    ~Player() = default;
+    ~Player();
 
     virtual void update();
     virtual void render(HDC backDC);
 
+    void decreaseLifePointCount() 
+    {
+        --mLifePointCount;
+    }
+
+    int getLifePointCount() 
+    {
+        return mLifePointCount;
+    }
+
 private:
     void createBullet();
 
-    int mLifePoint;
+    int mLifePointCount;
     float mSpeed;
 };
 

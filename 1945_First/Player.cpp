@@ -6,12 +6,23 @@
 #include "ObjLayer.h"
 #include "DefaultBullet.h"
 #include "ResourceManager.h"
+#include "Component.h"
+#include "Collider.h"
 
 Player::Player(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
 	: Obj(tag, pos, scale, texture, layer)
-	, mLifePoint(3)
+	, mLifePointCount(3)
 	, mSpeed(450.f)
 {
+}
+
+Player::~Player()
+{
+	for(auto component : mComponents)
+	{
+		delete component;
+	}
+	mComponents.clear();
 }
 
 void Player::update()
@@ -96,6 +107,8 @@ void Player::createBullet()
 
 	DefaultBullet* bullet = new DefaultBullet(L"playerBullet", pos, res, texture, mLayer);
 	
+	bullet->setComponent(new Collider(COMPONENT_TYPE::COLIIDER, bullet, pos, PointF{}, res));
+
 	// 총알 생성 후 오브젝트 레이어에 저장
 	ObjLayer* layer = (ObjLayer*)mLayer;
 	layer->addObj(OBJ_TYPE::P_DEFAULT_BULLET, bullet);

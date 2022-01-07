@@ -28,8 +28,11 @@ public:
 
 private:
     void createObstacle();
-    void deleteBullet();
+    void deleteObj(OBJ_TYPE type);
+    void colliderUpdate();
+    void colliderRender(HDC backDC);
 
     list<Obj*> mObjs[(UINT)OBJ_TYPE::END];
+    bool isRender;
 };
 

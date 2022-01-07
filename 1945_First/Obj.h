@@ -4,6 +4,7 @@
 
 class Texture;
 class Layer;
+class Component;
 
 class Obj
 {
@@ -13,6 +14,12 @@ public:
 	virtual void init() {};
 	virtual void update() = 0;
 	virtual void render(HDC backDC) = 0;
+
+	vector<Component*> getComponents(COMPONENT_TYPE type);
+	vector<Component*> getAllComponents()
+	{
+		return mComponents;
+	}
 
 	const wstring& getTag() const 
 	{
@@ -34,6 +41,17 @@ public:
 		mTexture = texture;
 	}
 
+	bool isValidDown();
+	bool isValidUp()
+	{
+		return mPos.y + mScale.y > 0;
+	}
+	
+	void setComponent(Component* component) 
+	{
+		mComponents.push_back(component);
+	}
+
 protected:
 	Obj(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer);
 
@@ -42,5 +60,6 @@ protected:
 	POINT mScale;
 	Texture* mTexture;
 	Layer* mLayer;
+	vector<Component*> mComponents;
 };
 

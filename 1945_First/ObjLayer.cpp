@@ -2,9 +2,18 @@
 #include "Obj.h"
 #include "Player.h"
 #include "StageManager.h"
+#include "Texture.h"
+#include "CoreManager.h"
+#include "Obstacle.h"
+#include "ResourceManager.h"
+#include "TimeManager.h"
+#include "Collider.h"
+#include "Component.h"
+#include "InputManager.h"
 
 ObjLayer::ObjLayer()
 	: mObjs{}
+	, isRender(true)
 {
 }
 
@@ -40,7 +49,15 @@ void ObjLayer::update()
 			element->update();
 		}
 	}
-	deleteBullet(); // 유효하지 않은 범위의 총알 삭제
+	createObstacle();
+
+	deleteObj(OBJ_TYPE::P_DEFAULT_BULLET); // 유효하지 않은 범위의 플레이어 총알 삭제
+	deleteObj(OBJ_TYPE::OBSTACLE); // 유효하지 않은 범위의 장애물 삭제
+
+	// 충돌체 업데이트 진행
+	colliderUpdate();
+
+	// 오브젝트간 충돌체크 진행
 }
 
 void ObjLayer::render(HDC backDC)
@@ -52,30 +69,94 @@ void ObjLayer::render(HDC backDC)
 			element->render(backDC);
 		}
 	}
+
+	if (IS_TIC(KEY_LIST::_1))
+	{
+		isRender ? isRender = false : isRender = true;
+	}
+
+	if (isRender)
+	{
+		// 충돌체 렌더링 진행
+		colliderRender(backDC);
+	}
 }
 
 void ObjLayer::createObstacle()
 {
+	static float regen = 0.f;
+	regen += DS;
+
+	if (regen > 0.8f)
+	{
+		wstring tag(L"obstacle");
+		tag += to_wstring(rand() % 3);
+		Texture* texture = FIND_TEXTURE(tag.c_str());
+
+		POINT res = texture->getResolution();
+		float x = float(rand() % (WINDOW.right - 100));
+		PointF pos = { x, 0 };
+		int hp = rand() % 20 + 10;
+		float speed = float(rand() % 300 + 250);
+
+		mObjs[(UINT)OBJ_TYPE::OBSTACLE].push_back(new Obstacle(L"obstacle", pos, res, texture, this, hp, speed));
+
+		regen = 0.f;
+	}
 }
 
-void ObjLayer::deleteBullet()
+void ObjLayer::colliderUpdate()
 {
-	auto iter = mObjs[(UINT)OBJ_TYPE::P_DEFAULT_BULLET].begin();
-	auto endIter = mObjs[(UINT)OBJ_TYPE::P_DEFAULT_BULLET].end();
-
-	while (iter != endIter) 
+	for (int i = 0; i < (UINT)OBJ_TYPE::END; ++i)
 	{
-		if ((*iter)->getPos().y < 0) 
+		for (const auto element : mObjs[i])
 		{
-			delete (*iter);
-			iter = mObjs[(UINT)OBJ_TYPE::P_DEFAULT_BULLET].erase(iter);
-			endIter = mObjs[(UINT)OBJ_TYPE::P_DEFAULT_BULLET].end();
-		}
-		else 
-		{
-			++iter;
+			vector<Component*> components = element->getComponents(COMPONENT_TYPE::COLIIDER);
+
+			for (const auto component : components)
+			{
+				component->update();
+			}
 		}
 	}
 }
+
+void ObjLayer::colliderRender(HDC backDC)
+{
+	for (int i = 0; i < (UINT)OBJ_TYPE::END; ++i)
+	{
+		for (const auto element : mObjs[i])
+		{
+			vector<Component*> components = element->getComponents(COMPONENT_TYPE::COLIIDER);
+
+			for (const auto component : components)
+			{
+				component->render(backDC);
+			}
+		}
+	}
+}
+
+void ObjLayer::deleteObj(OBJ_TYPE type)
+{
+	auto iter = mObjs[(UINT)type].begin();
+	auto endIter = mObjs[(UINT)type].end();
+
+	while (iter != endIter)
+	{
+		if ((*iter)->isValidUp())
+		{
+			++iter;
+		}
+		else
+		{
+			delete (*iter);
+			iter = mObjs[(UINT)type].erase(iter);
+			endIter = mObjs[(UINT)type].end();
+		}
+	}
+}
+
+
 
 

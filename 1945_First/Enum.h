@@ -98,6 +98,14 @@ enum class LAYER_TYPE
 {
 	//BACKGRAOUND,
 	OBJ,
-	//UI,
+	UI,
+	END
+};
+
+enum class COMPONENT_TYPE 
+{
+	COLIIDER,
+	ANIMATOR,
+	FSM,
 	END
 };

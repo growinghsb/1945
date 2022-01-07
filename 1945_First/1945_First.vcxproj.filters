@@ -91,6 +91,15 @@
     <Filter Include="Game\09.Object\Bullet">
       <UniqueIdentifier>{97fc4762-5202-4917-80e7-b602b92eab60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\11.Component\Component">
+      <UniqueIdentifier>{b47cd55d-9d77-4bdb-83a9-1a3b36095b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\11.Component\Collider">
+      <UniqueIdentifier>{039db275-5a59-4b2c-b2d7-414aa3d9710c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\12.Layer\UILayer">
+      <UniqueIdentifier>{409e06e4-9ffa-415c-b705-c24240666b47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,6 +177,18 @@
     <ClInclude Include="DefaultBullet.h">
       <Filter>Game\09.Object\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Game\09.Object\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Game\11.Component\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Game\11.Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="UILayer.h">
+      <Filter>Game\12.Layer\UILayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -223,6 +244,18 @@
     </ClCompile>
     <ClCompile Include="DefaultBullet.cpp">
       <Filter>Game\09.Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Game\09.Object\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Game\11.Component\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Game\11.Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="UILayer.cpp">
+      <Filter>Game\12.Layer\UILayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

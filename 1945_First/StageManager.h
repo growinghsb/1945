@@ -27,7 +27,7 @@ public:
 		mCurrentPlayer = player;
 	}
 
-	Texture* getTexture() const 
+	Texture* getPlayerTexture() const 
 	{
 		return mPlayerTexture;
 	}

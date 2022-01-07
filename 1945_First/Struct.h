@@ -4,11 +4,16 @@ struct PointF
 {
 	float x;
 	float y;
+
+	PointF operator +(const PointF rhs)
+	{
+		return PointF{ x + rhs.x, y + rhs.y };
+	}
 };
 
 struct EventInfo
 {
-	EVENT_TYPE mType; 
+	EVENT_TYPE mType;
 	DWORD_PTR mLow;
 	DWORD_PTR mHigh;
 };

@@ -5,6 +5,9 @@
 #include "Texture.h"
 #include "CoreManager.h"
 #include "Player.h"
+#include "Collider.h"
+#include "UILayer.h"
+#include "ResourceManager.h"
 
 extern bool excuteTimer;
 
@@ -26,11 +29,11 @@ PlayStage1::~PlayStage1()
 void PlayStage1::enter()
 {
 	// 백그라운드 레이어
-	mLayer.push_back(new ObjLayer()); // 오브젝트 레이어 생성
-	// 사용자UI 레이어
+	mLayer.push_back(new ObjLayer());					 // 오브젝트 레이어
+	mLayer.push_back(new UILayer(FIND_TEXTURE(L"life")));// 사용자UI 레이어
 
 	// 플레이어 생성
-	Texture* texture = StageManager::getInstance()->getTexture();
+	Texture* texture = StageManager::getInstance()->getPlayerTexture();
 	POINT res = texture->getResolution();
 
 	float x = float((WINDOW.right - res.x) / 2);
@@ -38,6 +41,12 @@ void PlayStage1::enter()
 
 	Player* player  = new Player(L"player", pos, res, texture, mLayer[(UINT)LAYER_TYPE::OBJ]);
 
+	// 충돌체 컴포넌트 추가
+	POINT colScale = { int(res.x * 0.5), int(res.y * 0.7) };
+	PointF offset = { float(res.x - colScale.x) / 2, float(res.y - colScale.y) / 2 };
+	player->setComponent(new Collider(COMPONENT_TYPE::COLIIDER, player, pos, offset, colScale));
+
+	// 생성된 플레이어 스테이지 매니저에 추가
 	StageManager::getInstance()->setPlayer(player);
 
 	// 생성된 플레이어 오브젝트 레이어에 추가
