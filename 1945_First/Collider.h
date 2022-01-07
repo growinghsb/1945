@@ -12,6 +12,30 @@ public:
 	void update() override;
 	void render(HDC backDC) override;
 
+	RECT getCollider() const
+	{
+		return RECT{ int(mPos.x), int(mPos.y), int(mPos.x + mScale.x), int(mPos.y + mScale.y) };
+	}
+
+	bool isCollision(Collider* target) 
+	{
+		float xDist = abs(mPos.x - target->mPos.x);
+		
+		if (xDist > mScale.x / 2 + target->mScale.y / 2) 
+		{
+			return false;
+		}
+
+		float yDist = abs(mPos.y - target->mPos.y);
+
+		if(yDist > mScale.y / 2 + target->mScale.y / 2)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 private:
 	PointF mPos;
 	PointF mOffset;

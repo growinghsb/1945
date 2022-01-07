@@ -1,6 +1,7 @@
 #include "Obj.h"
 #include "CoreManager.h"
 #include "Component.h"
+#include "Collider.h"
 
 Obj::Obj(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
 	: mTag(tag)
@@ -13,16 +14,16 @@ Obj::Obj(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
 	mComponents.reserve(4);
 }
 
-vector<Component*> Obj::getComponents(COMPONENT_TYPE type)
+vector<Collider*> Obj::getColliderVector()
 {
-	vector<Component*> comps;
+	vector<Collider*> comps;
 	comps.reserve(4);
 
 	for (auto element : mComponents)
 	{
-		if (element->getType() == type)
+		if (element->getType() == COMPONENT_TYPE::COLLIDER)
 		{
-			comps.push_back(element);
+			comps.push_back((Collider*)element);
 		}
 	}
 	return comps;

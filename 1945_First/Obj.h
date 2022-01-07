@@ -5,6 +5,7 @@
 class Texture;
 class Layer;
 class Component;
+class Collider;
 
 class Obj
 {
@@ -14,8 +15,9 @@ public:
 	virtual void init() {};
 	virtual void update() = 0;
 	virtual void render(HDC backDC) = 0;
+	virtual void onCollision(OBJ_TYPE collisionTarget) = 0;
 
-	vector<Component*> getComponents(COMPONENT_TYPE type);
+	vector<Collider*> getColliderVector();
 	vector<Component*> getAllComponents()
 	{
 		return mComponents;
@@ -50,6 +52,11 @@ public:
 	void setComponent(Component* component) 
 	{
 		mComponents.push_back(component);
+	}
+
+	Layer* getLayer() const
+	{
+		return mLayer;
 	}
 
 protected:

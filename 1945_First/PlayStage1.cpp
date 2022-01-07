@@ -8,6 +8,7 @@
 #include "Collider.h"
 #include "UILayer.h"
 #include "ResourceManager.h"
+#include "CollisionManager.h"
 
 extern bool excuteTimer;
 
@@ -44,12 +45,12 @@ void PlayStage1::enter()
 	// 충돌체 컴포넌트 추가
 	POINT colScale = { int(res.x * 0.5), int(res.y * 0.7) };
 	PointF offset = { float(res.x - colScale.x) / 2, float(res.y - colScale.y) / 2 };
-	player->setComponent(new Collider(COMPONENT_TYPE::COLIIDER, player, pos, offset, colScale));
+	player->setComponent(new Collider(COMPONENT_TYPE::COLLIDER, player, pos, offset, colScale));
 
-	// 생성된 플레이어 스테이지 매니저에 추가
+	// 생성된 플레이어, 스테이지 매니저에 추가
 	StageManager::getInstance()->setPlayer(player);
 
-	// 생성된 플레이어 오브젝트 레이어에 추가
+	// 생성된 플레이어, 오브젝트 레이어에 추가
 	ObjLayer* layer = (ObjLayer*)mLayer[(UINT)LAYER_TYPE::OBJ];
 	layer->addObj(OBJ_TYPE::PLAYER, player);
 
@@ -70,6 +71,9 @@ void PlayStage1::update()
 	{
 		element->update();
 	}
+
+	// 여기서 충돌매니저 업데이트 진행
+	CollisionManager::getInstance()->update((ObjLayer*)mLayer[(UINT)LAYER_TYPE::OBJ]);
 }
 
 void PlayStage1::render(HDC backDC)
@@ -82,9 +86,4 @@ void PlayStage1::render(HDC backDC)
 
 void PlayStage1::exit()
 {
-	excuteTimer = false;
-	TimeManager::getInstance()->clear();
-
-	ObjLayer* layer = (ObjLayer*)mLayer[(UINT)LAYER_TYPE::OBJ];
-	StageManager::getInstance()->setPlayer(layer->getPlayer());
 }

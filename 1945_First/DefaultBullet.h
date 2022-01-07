@@ -11,8 +11,14 @@ public:
     DefaultBullet(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer);
     ~DefaultBullet();
 
-    virtual void update();
-    virtual void render(HDC backDC);
+     void update() override;
+     void render(HDC backDC) override;
+     void onCollision(OBJ_TYPE collisionTarget) override;
+
+     int getOffencePower() 
+     {
+         return mOffencePower;
+     }
 
     void offencePowerUp() 
     {

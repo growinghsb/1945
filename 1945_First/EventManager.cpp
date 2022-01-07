@@ -1,5 +1,7 @@
 #include "EventManager.h"
 #include "StageManager.h"
+#include "Obj.h"
+#include "ObjLayer.h"
 
 EventManager::EventManager()
 	: mEventQueue{}
@@ -19,6 +21,7 @@ void EventManager::execute()
 		case EVENT_TYPE::CREATE_OBJ:
 			break;
 		case EVENT_TYPE::DELETE_OBJ:
+			deleteObj((OBJ_TYPE)element.mLow, (Obj*)element.mHigh);
 			break;
 		default:
 			break;
@@ -32,4 +35,11 @@ void EventManager::changeStage(CHANGE_STAGE_TYPE type)
 {
 	// 여기서 스테이지 변경 작업 요청
 	StageManager::getInstance()->changeStage(type);
+}
+
+void EventManager::deleteObj(OBJ_TYPE objType, Obj* obj)
+{
+	// 오브젝트 삭제 작업
+	ObjLayer* layer = (ObjLayer*)obj->getLayer();
+	layer->deleteObj(objType, obj);
 }

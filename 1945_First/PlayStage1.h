@@ -18,6 +18,11 @@ public:
 	virtual void render(HDC backDC) override;
 	virtual void exit() override;
 
+	ObjLayer* getLayer() const 
+	{
+		return (ObjLayer*)mLayer[(UINT)LAYER_TYPE::OBJ];
+	}
+
 private:
     vector<Layer*> mLayer;
 };

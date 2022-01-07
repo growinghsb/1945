@@ -15,15 +15,7 @@ public:
 		return mDS;
 	}
 
-	void clear()
-	{
-		mFrequency = {};
-		mPrevCounter = {};
-		mCurCounter = {};
-		mDS = 0.f;
-		mFPS = 0;
-		mSecond = 0;
-	}
+	void clear();
 
 private:
 	TimeManager();

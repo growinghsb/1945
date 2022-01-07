@@ -104,7 +104,7 @@ enum class LAYER_TYPE
 
 enum class COMPONENT_TYPE 
 {
-	COLIIDER,
+	COLLIDER,
 	ANIMATOR,
 	FSM,
 	END

@@ -2,6 +2,8 @@
 #include "TimeManager.h"
 #include "Texture.h"
 #include "Component.h"
+#include "ObjLayer.h"
+#include "EventManager.h"
 
 DefaultBullet::DefaultBullet(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
 	: Obj(tag, pos, scale, texture, layer)
@@ -28,4 +30,18 @@ void DefaultBullet::render(HDC backDC)
 {
 	POINT res = mTexture->getResolution();
 	TransparentBlt(backDC, (int)mPos.x, (int)mPos.y, res.x, res.y, mTexture->getTextureDC(), 0, 0, res.x, res.y, COLOR_WHITE);
+}
+
+void DefaultBullet::onCollision(OBJ_TYPE collisionTarget)
+{
+	ObjLayer* layer = (ObjLayer*)mLayer;
+
+	switch (collisionTarget)
+	{
+	case OBJ_TYPE::OBSTACLE:
+		DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, this);
+		break;
+	default:
+		break;
+	}
 }

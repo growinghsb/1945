@@ -82,6 +82,29 @@ void ObjLayer::render(HDC backDC)
 	}
 }
 
+void ObjLayer::deleteObj(OBJ_TYPE type, Obj* targetObj)
+{
+	auto& list = mObjs[(UINT)type];
+
+	auto iter = list.begin();
+	auto endIter = list.end();
+
+	while (iter != endIter) 
+	{
+		if ((*iter) == targetObj) 
+		{
+			delete (*iter);
+			list.erase(iter);
+
+			return;
+		}
+		else 
+		{
+			++iter;
+		}
+	}
+}
+
 void ObjLayer::createObstacle()
 {
 	static float regen = 0.f;
@@ -111,7 +134,7 @@ void ObjLayer::colliderUpdate()
 	{
 		for (const auto element : mObjs[i])
 		{
-			vector<Component*> components = element->getComponents(COMPONENT_TYPE::COLIIDER);
+			vector<Collider*> components = element->getColliderVector();
 
 			for (const auto component : components)
 			{
@@ -127,7 +150,7 @@ void ObjLayer::colliderRender(HDC backDC)
 	{
 		for (const auto element : mObjs[i])
 		{
-			vector<Component*> components = element->getComponents(COMPONENT_TYPE::COLIIDER);
+			vector<Collider*> components = element->getColliderVector();
 
 			for (const auto component : components)
 			{

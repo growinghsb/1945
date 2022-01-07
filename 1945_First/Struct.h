@@ -17,3 +17,9 @@ struct EventInfo
 	DWORD_PTR mLow;
 	DWORD_PTR mHigh;
 };
+
+struct CollisionGroup 
+{
+	OBJ_TYPE obj1;
+	OBJ_TYPE obj2;
+};

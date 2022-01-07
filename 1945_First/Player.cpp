@@ -8,6 +8,7 @@
 #include "ResourceManager.h"
 #include "Component.h"
 #include "Collider.h"
+#include "EventManager.h"
 
 Player::Player(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
 	: Obj(tag, pos, scale, texture, layer)
@@ -85,6 +86,29 @@ void Player::render(HDC backDC)
 	TransparentBlt(backDC, (int)mPos.x, (int)mPos.y, res.x, res.y, mTexture->getTextureDC(), 0, 0, res.x, res.y, COLOR_WHITE);
 }
 
+void Player::onCollision(OBJ_TYPE collisionTarget)
+{
+	// 플레이어가 다른 오브젝트와 충돌 했을 때
+	switch (collisionTarget)
+	{
+	case OBJ_TYPE::OBSTACLE:
+		collisionObstacle();
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::collisionObstacle()
+{
+	--mLifePointCount;
+
+	if (0 == mLifePointCount) 
+	{
+		ADD_STAGE_CHANGE(EVENT_TYPE::STAGE_CHANGE, CHANGE_STAGE_TYPE::INTRO);
+	}
+}
+
 void Player::createBullet()
 {
 	Texture* texture = nullptr;
@@ -107,7 +131,7 @@ void Player::createBullet()
 
 	DefaultBullet* bullet = new DefaultBullet(L"playerBullet", pos, res, texture, mLayer);
 	
-	bullet->setComponent(new Collider(COMPONENT_TYPE::COLIIDER, bullet, pos, PointF{}, res));
+	bullet->setComponent(new Collider(COMPONENT_TYPE::COLLIDER, bullet, pos, PointF{}, res));
 
 	// 총알 생성 후 오브젝트 레이어에 저장
 	ObjLayer* layer = (ObjLayer*)mLayer;

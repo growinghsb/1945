@@ -2,6 +2,8 @@
 
 #include "Game.h"
 
+class Obj;
+
 class EventManager
 {
 public:
@@ -15,10 +17,12 @@ public:
 		mEventQueue.push_back(EventInfo{ type, (DWORD_PTR)changeType });
 	}
 	
-	// 아래 두 개는 추후에 진행
-	void addCreateObj();
-	void addDeleteObj();
+	void addDeleteObj(EVENT_TYPE type, OBJ_TYPE objType, Obj* obj)
+	{
+		mEventQueue.push_back(EventInfo{type, (DWORD_PTR)objType, (DWORD_PTR)obj});
+	}
 
+	void addCreateObj(); // 나중에
 
 private:
 	EventManager();
@@ -26,7 +30,7 @@ private:
 	
 	void changeStage(CHANGE_STAGE_TYPE type);
 	void createObj();
-	void deleteObj();
+	void deleteObj(OBJ_TYPE objType, Obj* obj);
 
 	vector<EventInfo> mEventQueue;
 };

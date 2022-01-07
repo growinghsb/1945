@@ -1,4 +1,5 @@
 #include "TimeManager.h"
+#include "CoreManager.h"
 
 static float ds = 0.f;
 static int second = 0;
@@ -51,4 +52,19 @@ void TimeManager::update(HWND hWnd)
 		mFPS = 0;
 	}
 	mPrevCounter = mCurCounter;
+}
+
+void TimeManager::clear()
+{
+	mFrequency = {};
+	mPrevCounter = {};
+	mCurCounter = {};
+	mDS = 0.f;
+	mFPS = 0;
+	mSecond = 0;
+
+	enum { LENGTH = 8 };
+	wchar_t text[LENGTH] = {};
+	swprintf(text, LENGTH, L"1945");
+	SetWindowTextW(CoreManager::getInstance()->getHWnd(), text);
 }

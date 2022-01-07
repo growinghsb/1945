@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="1945_First.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CoreManager.h" />
     <ClInclude Include="CResource.h" />
@@ -176,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="DefaultBullet.cpp" />

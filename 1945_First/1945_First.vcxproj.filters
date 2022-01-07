@@ -189,6 +189,9 @@
     <ClInclude Include="UILayer.h">
       <Filter>Game\12.Layer\UILayer</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Game\07.CollisionManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -256,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="UILayer.cpp">
       <Filter>Game\12.Layer\UILayer</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Game\07.CollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
