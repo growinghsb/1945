@@ -9,17 +9,22 @@
 #include "Component.h"
 #include "Collider.h"
 #include "EventManager.h"
+#include "Obj.h"
 
 Player::Player(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
 	: Obj(tag, pos, scale, texture, layer)
-	, mLifePointCount(3)
+	, mLifePointCount(5)
 	, mSpeed(450.f)
 {
+	// 충돌체 컴포넌트 추가
+	POINT colScale = { int(mScale.x * 0.5), int(mScale.y * 0.7) };
+	PointF offset = { float(mScale.x - colScale.x) / 2, float(mScale.y - colScale.y) / 2 };
+	setComponent(new Collider(COMPONENT_TYPE::COLLIDER, this, pos, offset, colScale));
 }
 
 Player::~Player()
 {
-	for(auto component : mComponents)
+	for (auto component : mComponents)
 	{
 		delete component;
 	}
@@ -32,7 +37,7 @@ void Player::update()
 	{
 		mPos.y -= mSpeed * DS;
 
-		if (mPos.y < 0) 
+		if (mPos.y < 0)
 		{
 			mPos.y = 0;
 		}
@@ -41,7 +46,7 @@ void Player::update()
 	{
 		mPos.y += mSpeed * DS;
 
-		if (mPos.y + mScale.y > WINDOW.bottom) 
+		if (mPos.y + mScale.y > WINDOW.bottom)
 		{
 			mPos.y = (float)WINDOW.bottom - mScale.y;
 		}
@@ -60,8 +65,8 @@ void Player::update()
 	if (IS_PRESS(KEY_LIST::RIGHT))
 	{
 		mPos.x += mSpeed * DS;
-		
-		if (mPos.x + mScale.x > WINDOW.right) 
+
+		if (mPos.x + mScale.x > WINDOW.right)
 		{
 			mPos.x = (float)WINDOW.right - mScale.x;
 		}
@@ -72,9 +77,10 @@ void Player::update()
 
 	if (IS_PRESS(KEY_LIST::SPACE))
 	{
-		if (regen > 0.06f) 
+		if (regen > 0.06f)
 		{
-			createBullet();
+			ObjLayer* layer = (ObjLayer*)mLayer;
+			layer->createBullet();
 			regen = 0.f;
 		}
 	}
@@ -94,6 +100,8 @@ void Player::onCollision(OBJ_TYPE collisionTarget)
 	case OBJ_TYPE::OBSTACLE:
 		collisionObstacle();
 		break;
+	case OBJ_TYPE::E_DEFAULT_BULLET:
+		collisionObstacle();
 	default:
 		break;
 	}
@@ -103,37 +111,10 @@ void Player::collisionObstacle()
 {
 	--mLifePointCount;
 
-	if (0 == mLifePointCount) 
+	if (0 == mLifePointCount)
 	{
 		ADD_STAGE_CHANGE(EVENT_TYPE::STAGE_CHANGE, CHANGE_STAGE_TYPE::INTRO);
 	}
 }
 
-void Player::createBullet()
-{
-	Texture* texture = nullptr;
-	POINT res = {};
-	float x = 0.f;
-	PointF pos = {};
 
-	if (mTexture->getTag() == L"player1")
-	{
-		texture = ResourceManager::getInstance()->findTexture(L"bullet1-1");
-	}
-	else 
-	{
-		texture = ResourceManager::getInstance()->findTexture(L"bullet2-1");
-	}
-
-	res = texture->getResolution();
-	x = float(mPos.x + ((mScale.x - res.x)) / 2);
-	pos = { x, mPos.y };
-
-	DefaultBullet* bullet = new DefaultBullet(L"playerBullet", pos, res, texture, mLayer);
-	
-	bullet->setComponent(new Collider(COMPONENT_TYPE::COLLIDER, bullet, pos, PointF{}, res));
-
-	// 총알 생성 후 오브젝트 레이어에 저장
-	ObjLayer* layer = (ObjLayer*)mLayer;
-	layer->addObj(OBJ_TYPE::P_DEFAULT_BULLET, bullet);
-}

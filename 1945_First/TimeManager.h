@@ -17,6 +17,11 @@ public:
 
 	void clear();
 
+	int getSecond()
+	{
+		return mSecond;
+	}
+
 private:
 	TimeManager();
 	~TimeManager() = default;

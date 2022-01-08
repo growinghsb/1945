@@ -20,6 +20,16 @@ public:
         --mLifePointCount;
     }
 
+    void increaseLifePointCount()
+    {
+        ++mLifePointCount;
+        
+        if (mLifePointCount > MAX_LIFE_COUNT) 
+        {
+            mLifePointCount = MAX_LIFE_COUNT;
+        }
+    }
+
     int getLifePointCount() 
     {
         return mLifePointCount;
@@ -27,7 +37,8 @@ public:
 
 private:
     void collisionObstacle();
-    void createBullet();
+
+    enum { MAX_LIFE_COUNT = 5 };
 
     int mLifePointCount;
     float mSpeed;

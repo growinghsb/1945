@@ -46,7 +46,7 @@ public:
 	bool isValidDown();
 	bool isValidUp()
 	{
-		return mPos.y + mScale.y > 0;
+		return mPos.y + mScale.y > -20;
 	}
 	
 	void setComponent(Component* component) 

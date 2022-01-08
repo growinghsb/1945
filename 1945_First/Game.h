@@ -11,7 +11,7 @@
 
 #include <crtdbg.h>
 
-#include <cassert>
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include <list>

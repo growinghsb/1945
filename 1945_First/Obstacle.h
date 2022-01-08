@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Obj.h"
+
 class Obstacle :
 	public Obj
 {
@@ -16,12 +18,11 @@ public:
 		mHP -= offencePower;
 	}
 
-	bool isDie()
-	{
-		return mHP <= 0;
-	}
+	void isDie();
 
 private:
+	void createItem();
+
 	int mHP;
 	float mSpeed;
 };

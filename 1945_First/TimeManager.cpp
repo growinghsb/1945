@@ -63,6 +63,9 @@ void TimeManager::clear()
 	mFPS = 0;
 	mSecond = 0;
 
+	ds = 0.f;
+	second = 0;
+
 	enum { LENGTH = 8 };
 	wchar_t text[LENGTH] = {};
 	swprintf(text, LENGTH, L"1945");

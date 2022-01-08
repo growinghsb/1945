@@ -5,13 +5,15 @@
 #include "ObjLayer.h"
 #include "DefaultBullet.h"
 #include "EventManager.h"
+#include "ResourceManager.h"
+#include "Item.h"
 
 Obstacle::Obstacle(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer, int hp, float speed)
 	: Obj(tag, pos, scale, texture, layer)
 	, mHP(hp)
 	, mSpeed(speed)
 {
-	POINT colScale = { int(mScale.x * 0.7), int(mScale.y * 0.7) };
+	POINT colScale = { int(mScale.x * 0.8), int(mScale.y * 0.8) };
 	PointF offset = { float(mScale.x - colScale.x) / 2, float(mScale.y - colScale.y) / 2 };
 
 	setComponent(new Collider(COMPONENT_TYPE::COLLIDER, this, mPos, offset, colScale));
@@ -50,14 +52,36 @@ void Obstacle::onCollision(OBJ_TYPE collisionTarget)
 	{
 		DefaultBullet* bullet = (DefaultBullet*)layer->getObjList(OBJ_TYPE::P_DEFAULT_BULLET).back();
 		mHP -= bullet->getOffencePower();
+		isDie();
 
-		if (mHP <= 0)
-		{
-			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::OBSTACLE, this);
-		}
 		break;
 	}
 	default:
 		break;
 	}
+}
+
+void Obstacle::isDie()
+{
+	if (mHP <= 0)
+	{
+		if (rand() % 4 == 0)
+		{
+			createItem();
+		}
+		DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::OBSTACLE, this);
+	}
+}
+
+void Obstacle::createItem()
+{
+	enum { ITEM_COUNT = 2 };
+
+	wstring tag(L"item");
+	tag += to_wstring(rand() % ITEM_COUNT);
+	Texture* texture = FIND_TEXTURE(tag.c_str());
+
+	POINT res = texture->getResolution();
+
+	CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::ITEM, new Item(L"item", PointF{ mPos.x, mPos.y - 30 }, res, texture, mLayer));
 }

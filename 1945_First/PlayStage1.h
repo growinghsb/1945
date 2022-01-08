@@ -6,7 +6,7 @@ class Layer;
 class ObjLayer;
 
 class PlayStage1 :
-    public Stage
+	public Stage
 {
 public:
 	PlayStage1(int orderNum);
@@ -18,12 +18,14 @@ public:
 	virtual void render(HDC backDC) override;
 	virtual void exit() override;
 
-	ObjLayer* getLayer() const 
+	ObjLayer* getLayer() const
 	{
 		return (ObjLayer*)mLayer[(UINT)LAYER_TYPE::OBJ];
 	}
 
 private:
-    vector<Layer*> mLayer;
+	void clear();
+
+	vector<Layer*> mLayer;
 };
 

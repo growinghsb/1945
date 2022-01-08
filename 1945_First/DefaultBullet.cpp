@@ -4,17 +4,22 @@
 #include "Component.h"
 #include "ObjLayer.h"
 #include "EventManager.h"
+#include "Collider.h"
+#include "Player.h"
 
-DefaultBullet::DefaultBullet(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer)
+DefaultBullet::DefaultBullet(wstring tag, PointF pos, POINT scale, Texture* texture, Layer* layer, float speed, int offencePower, int level, float angle)
 	: Obj(tag, pos, scale, texture, layer)
-	, mSpeed(700)
-	, mOffencePower(2) // 2 - 4 - 6 - 8 로 증가
+	, mSpeed(speed)
+	, mOffencePower(offencePower) // 2 - 4 - 6 - 8 로 증가
+	, mCurrentBulletLevel(level) // 1 ~ 4까지
+	, mAngle(angle)
 {
+	setComponent(new Collider(COMPONENT_TYPE::COLLIDER, this, pos, PointF{}, mTexture->getResolution()));
 }
 
 DefaultBullet::~DefaultBullet()
 {
-	for (auto component : mComponents) 
+	for (auto component : mComponents)
 	{
 		delete component;
 	}
@@ -23,7 +28,18 @@ DefaultBullet::~DefaultBullet()
 
 void DefaultBullet::update()
 {
-	mPos.y -= mSpeed * DS;
+	if (   mTag == L"rudderBullet"
+		|| mTag == L"nWayBullet"
+		|| mTag == L"circleBullet"
+		|| mTag == L"defaultBullet")
+	{
+		mPos.x += mSpeed * DS * cosf(PI / 180 * mAngle);
+		mPos.y += mSpeed * DS * sinf(PI / 180 * mAngle);
+	}
+	else
+	{
+		mPos.y -= mSpeed * DS;
+	}
 }
 
 void DefaultBullet::render(HDC backDC)
@@ -40,6 +56,15 @@ void DefaultBullet::onCollision(OBJ_TYPE collisionTarget)
 	{
 	case OBJ_TYPE::OBSTACLE:
 		DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, this);
+		break;
+	case OBJ_TYPE::ENEMY:
+		DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, this);
+		break;
+	case OBJ_TYPE::PLAYER:
+		if (mTag != L"playerBullet")
+		{
+			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::E_DEFAULT_BULLET, this);
+		}
 		break;
 	default:
 		break;

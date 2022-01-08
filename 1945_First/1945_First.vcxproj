@@ -152,6 +152,7 @@
     <ClInclude Include="CResource.h" />
     <ClInclude Include="DefaultBullet.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="framework.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IntroStage.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjLayer.h" />
@@ -181,10 +183,12 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="DefaultBullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="IntroStage.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CoreManager.cpp" />

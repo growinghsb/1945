@@ -7,6 +7,8 @@
 #define IS_BACK(key)  InputManager::getInstance()->isBack(key)
 #define DS TimeManager::getInstance()->getDS()
 #define ADD_STAGE_CHANGE(eType, sChangeType) EventManager::getInstance()->addChangeStage(eType, sChangeType)
+#define CREATE_OBJ(eType, oType, pObj) EventManager::getInstance()->addCreateObj(eType, oType, pObj)
 #define DELETE_OBJ(eType, oType, pObj) EventManager::getInstance()->addDeleteObj(eType, oType, pObj)
 #define COLOR_WHITE RGB(255, 255, 255)
 #define FIND_TEXTURE(tag) ResourceManager::getInstance()->findTexture(tag)
+#define PI 3.14159289f

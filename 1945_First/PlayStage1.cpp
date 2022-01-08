@@ -10,8 +10,6 @@
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 
-extern bool excuteTimer;
-
 PlayStage1::PlayStage1(int orderNum)
 	: Stage(orderNum)
 {
@@ -20,18 +18,14 @@ PlayStage1::PlayStage1(int orderNum)
 
 PlayStage1::~PlayStage1()
 {
-	for (auto element : mLayer) 
-	{
-		delete element;
-	}
-	mLayer.clear();
+	clear();
 }
 
 void PlayStage1::enter()
 {
 	// 백그라운드 레이어
 	mLayer.push_back(new ObjLayer());					 // 오브젝트 레이어
-	mLayer.push_back(new UILayer(FIND_TEXTURE(L"life")));// 사용자UI 레이어
+	mLayer.push_back(new UILayer(FIND_TEXTURE(L"item0")));// 사용자UI 레이어, item0 이 하트모양 텍스처
 
 	// 플레이어 생성
 	Texture* texture = StageManager::getInstance()->getPlayerTexture();
@@ -40,12 +34,7 @@ void PlayStage1::enter()
 	float x = float((WINDOW.right - res.x) / 2);
 	PointF pos = { x, 600 };
 
-	Player* player  = new Player(L"player", pos, res, texture, mLayer[(UINT)LAYER_TYPE::OBJ]);
-
-	// 충돌체 컴포넌트 추가
-	POINT colScale = { int(res.x * 0.5), int(res.y * 0.7) };
-	PointF offset = { float(res.x - colScale.x) / 2, float(res.y - colScale.y) / 2 };
-	player->setComponent(new Collider(COMPONENT_TYPE::COLLIDER, player, pos, offset, colScale));
+	Player* player  = new Player(texture->getTag(), pos, res, texture, mLayer[(UINT)LAYER_TYPE::OBJ]);
 
 	// 생성된 플레이어, 스테이지 매니저에 추가
 	StageManager::getInstance()->setPlayer(player);
@@ -86,4 +75,15 @@ void PlayStage1::render(HDC backDC)
 
 void PlayStage1::exit()
 {
+	
+	clear();
+}
+
+void PlayStage1::clear()
+{
+	for (auto element : mLayer)
+	{
+		delete element;
+	}
+	mLayer.clear();
 }

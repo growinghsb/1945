@@ -192,6 +192,12 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Game\07.CollisionManager</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Game\09.Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Game\09.Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -262,6 +268,12 @@
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Game\07.CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Game\09.Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Game\09.Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

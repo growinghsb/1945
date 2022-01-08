@@ -11,7 +11,7 @@ Collider::Collider(COMPONENT_TYPE type, Obj* owner, PointF pos, PointF offset, P
 
 void Collider::update()
 {
-	mPos = mOwnerObj->getPos() + mOffset;
+	mPos = mOwnerObj->getPos() += mOffset;
 }
 
 void Collider::render(HDC backDC)

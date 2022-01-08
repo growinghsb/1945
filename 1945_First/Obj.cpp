@@ -31,5 +31,5 @@ vector<Collider*> Obj::getColliderVector()
 
 bool Obj::isValidDown()
 {
-	return mPos.y < WINDOW.bottom;
+	return mPos.y < WINDOW.bottom + 20;
 }

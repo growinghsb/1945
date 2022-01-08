@@ -17,23 +17,32 @@ public:
 		return RECT{ int(mPos.x), int(mPos.y), int(mPos.x + mScale.x), int(mPos.y + mScale.y) };
 	}
 
-	bool isCollision(Collider* target) 
+	bool isCollision(Collider* target)
 	{
-		float xDist = abs(mPos.x - target->mPos.x);
-		
-		if (xDist > mScale.x / 2 + target->mScale.y / 2) 
+		if (mPos.x			  < target->mPos.x + target->mScale.x &&
+			mPos.x + mScale.x > target->mPos.x &&
+			mPos.y			  < target->mPos.y + target->mScale.y &&
+			mPos.y + mScale.y > target->mPos.y)
+		{
+			return true;
+		}
+		return false;
+
+	/*	float xDist = abs(mPos.x - target->mPos.x);
+
+		if (xDist > mScale.x / 2 + target->mScale.y / 2)
 		{
 			return false;
 		}
 
 		float yDist = abs(mPos.y - target->mPos.y);
 
-		if(yDist > mScale.y / 2 + target->mScale.y / 2)
+		if (yDist > mScale.y / 2 + target->mScale.y / 2)
 		{
 			return false;
 		}
 
-		return true;
+		return true;*/
 	}
 
 private:
