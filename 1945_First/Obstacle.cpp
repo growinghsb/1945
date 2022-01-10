@@ -53,9 +53,15 @@ void Obstacle::onCollision(OBJ_TYPE collisionTarget)
 		DefaultBullet* bullet = (DefaultBullet*)layer->getObjList(OBJ_TYPE::P_DEFAULT_BULLET).back();
 		mHP -= bullet->getOffencePower();
 		isDie();
-
-		break;
 	}
+	break;
+	case OBJ_TYPE::SP_DEFAULT_BULLET:
+	{
+		DefaultBullet* bullet = (DefaultBullet*)layer->getObjList(OBJ_TYPE::SP_DEFAULT_BULLET).back();
+		mHP -= bullet->getOffencePower();
+		isDie();
+	}
+	break;
 	default:
 		break;
 	}

@@ -35,6 +35,7 @@ public:
 
 	void bulletUpgrade();
 	void createBullet();
+	void createSecondPlayerBullet();
 
 	int getBulletOffencePower() 
 	{
@@ -51,7 +52,7 @@ private:
 	list<Obj*> mObjs[(UINT)OBJ_TYPE::END];
 	bool isRender;
 
-	enum {MAX_BULLET_LEVEL = 4};
+	enum {MAX_BULLET_LEVEL = 4, MAX_SECOND_PLAYER_COUNT = 2};
 	int mBulletLevel;
 	int mBulletOffencePower;
 };

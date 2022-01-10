@@ -28,17 +28,14 @@ DefaultBullet::~DefaultBullet()
 
 void DefaultBullet::update()
 {
-	if (   mTag == L"rudderBullet"
-		|| mTag == L"nWayBullet"
-		|| mTag == L"circleBullet"
-		|| mTag == L"defaultBullet")
+	if (mTag == L"playerBullet" || mTag == L"secondPlayerBullet")
 	{
-		mPos.x += mSpeed * DS * cosf(PI / 180 * mAngle);
-		mPos.y += mSpeed * DS * sinf(PI / 180 * mAngle);
+		mPos.y -= mSpeed * DS;
 	}
 	else
 	{
-		mPos.y -= mSpeed * DS;
+		mPos.x += mSpeed * DS * cosf(PI / 180 * mAngle);
+		mPos.y += mSpeed * DS * sinf(PI / 180 * mAngle);
 	}
 }
 
@@ -55,13 +52,27 @@ void DefaultBullet::onCollision(OBJ_TYPE collisionTarget)
 	switch (collisionTarget)
 	{
 	case OBJ_TYPE::OBSTACLE:
-		DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, this);
+		if (mTag != L"playerBullet")
+		{
+			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::SP_DEFAULT_BULLET, this);
+		}
+		else
+		{
+			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, this);
+		}
 		break;
 	case OBJ_TYPE::ENEMY:
-		DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, this);
+		if (mTag != L"playerBullet")
+		{
+			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::SP_DEFAULT_BULLET, this);
+		}
+		else
+		{
+			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, this);
+		}
 		break;
 	case OBJ_TYPE::PLAYER:
-		if (mTag != L"playerBullet")
+		if (mTag != L"playerBullet" && mTag != L"secondPlayerBullet")
 		{
 			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::E_DEFAULT_BULLET, this);
 		}

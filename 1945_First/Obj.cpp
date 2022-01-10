@@ -29,7 +29,22 @@ vector<Collider*> Obj::getColliderVector()
 	return comps;
 }
 
-bool Obj::isValidDown()
+bool Obj::isValidLeft()
 {
-	return mPos.y < WINDOW.bottom + 20;
+	return mPos.x > -100;
+}
+
+bool Obj::isValidTop()
+{
+	return mPos.y > -100;
+}
+
+bool Obj::isValidRight()
+{
+	return mPos.x < WINDOW.right + 100;
+}
+
+bool Obj::isValidBottom()
+{
+	return mPos.y < WINDOW.bottom + 100;
 }

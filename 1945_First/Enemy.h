@@ -22,7 +22,7 @@ private:
 	void circleBullet(); // 전방향으로 퍼지는 원형탄
 	void fragmentationBullet(); // 처음엔 하나로 나와서 사방으로 퍼지는 분열탄
 
-	enum {MAX_HP = 2000};
+	enum {MAX_HP = 1000};
 
 	float mSpeed;
 	int mCurrentHP;

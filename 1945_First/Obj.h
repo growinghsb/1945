@@ -43,11 +43,10 @@ public:
 		mTexture = texture;
 	}
 
-	bool isValidDown();
-	bool isValidUp()
-	{
-		return mPos.y + mScale.y > -20;
-	}
+	bool isValidLeft();
+	bool isValidTop();
+	bool isValidRight();
+	bool isValidBottom();
 	
 	void setComponent(Component* component) 
 	{
@@ -57,6 +56,16 @@ public:
 	Layer* getLayer() const
 	{
 		return mLayer;
+	}
+
+	Texture* getTexture() const 
+	{
+		return mTexture;
+	}
+
+	void changePos(PointF pos) 
+	{
+		mPos = pos;
 	}
 
 protected:

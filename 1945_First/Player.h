@@ -38,7 +38,7 @@ public:
 private:
     void collisionObstacle();
 
-    enum { MAX_LIFE_COUNT = 5 };
+    enum { MAX_LIFE_COUNT = 5};
 
     int mLifePointCount;
     float mSpeed;

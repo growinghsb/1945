@@ -32,41 +32,42 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
+	static int second = 0;
+
 	if (mPos.y > 20)
 	{
 		mPos.y -= mSpeed * DS;
 	}
-	else
+	else if(mTag == L"boss0" || mTag == L"boss1" || mTag == L"boss2")
 	{
-		static int second = 0;
-		static float ds = 0.f;
+		static float bossDs = 0.f;
 
 		second = TimeManager::getInstance()->getSecond();
-		ds += DS;
+		bossDs += DS;
 
-		if (second % 3 == 0)
+		if (second % 2 == 0)
 		{
-			if (ds > 0.15f)
+			if (bossDs > 0.25f)
 			{
 				rudderBullet();
 				defaultBullet();
-				ds = 0.f;
+				bossDs = 0.f;
 			}
 		}
-		else if (second % 4 == 0)
+		else if (second % 3 == 0)
 		{
-			if (ds > 0.33f)
+			if (bossDs > 0.5f)
 			{
 				nWayBullet();
-				ds = 0.f;
+				bossDs = 0.f;
 			}
 		}
-		else if (second % 7 == 0) 
+		else if (second % 5 == 0)
 		{
-			if (ds > 0.49f)
+			if (bossDs > 1.f)
 			{
 				circleBullet();
-				ds = 0.f;
+				bossDs = 0.f;
 			}
 		}
 	}
@@ -85,13 +86,25 @@ void Enemy::onCollision(OBJ_TYPE collisionTarget)
 	switch (collisionTarget)
 	{
 	case OBJ_TYPE::P_DEFAULT_BULLET:
-
-		mCurrentHP -= layer->getBulletOffencePower();
+	{
+		DefaultBullet* bullet = (DefaultBullet*)layer->getObjList(OBJ_TYPE::P_DEFAULT_BULLET).back();
+		mCurrentHP -= bullet->getOffencePower();
 		if (mCurrentHP <= 0)
 		{
 			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::ENEMY, this);
 		}
-		break;
+	}
+	break;
+	case OBJ_TYPE::SP_DEFAULT_BULLET:
+	{
+		DefaultBullet* bullet = (DefaultBullet*)layer->getObjList(OBJ_TYPE::SP_DEFAULT_BULLET).back();
+		mCurrentHP -= bullet->getOffencePower();
+		if (mCurrentHP <= 0)
+		{
+			DELETE_OBJ(EVENT_TYPE::DELETE_OBJ, OBJ_TYPE::ENEMY, this);
+		}
+	}
+	break;
 	default:
 		break;
 	}
@@ -99,16 +112,14 @@ void Enemy::onCollision(OBJ_TYPE collisionTarget)
 
 void Enemy::defaultBullet()
 {
-	ObjLayer* layer = (ObjLayer*)mLayer;
-
 	Texture* texture = FIND_TEXTURE(L"bullet0");
 	POINT res = texture->getResolution();
-	
-	PointF pos = { mPos.x, mPos.y + mScale.y / 2 + 20};
-	layer->addObj(OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"defaultBullet", pos, res, texture, layer, 600.f, 0, 0, 75));
+
+	PointF pos = { mPos.x, mPos.y + mScale.y / 2 + 20 };
+	CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"defaultBullet", pos, res, texture, mLayer, 600.f, 0, 0, 90));
 
 	pos = { mPos.x + mScale.x, mPos.y + mScale.y / 2 + 20 };
-	layer->addObj(OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"defaultBullet", pos, res, texture, layer, 600.f, 0, 0, 105));
+	CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"defaultBullet", pos, res, texture, mLayer, 600.f, 0, 0, 90));
 }
 
 void Enemy::rudderBullet()
@@ -120,45 +131,41 @@ void Enemy::rudderBullet()
 	float y1 = pPos.y - mPos.y;
 
 	float degree = atan2(y1, x1) * 180 / PI;
-	if (degree < 0) degree += 360;
+	if (degree < 0) degree += 360.f;
 
 	Texture* texture = FIND_TEXTURE(L"bullet0");
 	POINT res = texture->getResolution();
 	float x = float(mPos.x + ((mScale.x - res.x)) / 2);
-	PointF pos = { x, mPos.y + 150 };
+	PointF pos = { x, mPos.y + mScale.y / 2 };
 
-	layer->addObj(OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"rudderBullet", pos, res, texture, layer, 600.f, 0, 0, degree));
+	CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"rudderBullet", pos, res, texture, mLayer, 500.f, 0, 0, degree + 7.5f));
 }
 
 void Enemy::nWayBullet()
 {
-	ObjLayer* layer = (ObjLayer*)mLayer;
-
 	Texture* texture = FIND_TEXTURE(L"bullet0");
 	POINT res = texture->getResolution();
 	float x = float(mPos.x + ((mScale.x - res.x)) / 2);
-	PointF pos = { x, mPos.y + 150 };
+	PointF pos = { x, mPos.y + mScale.y / 2 };
 
-	static float range = 22.5f;
-	for (float i = 0; i < 180.f; i += range)
+	float angle = 22.5f;
+	for (float i = 0; i < 180.f; i += angle)
 	{
-		layer->addObj(OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"nWayBullet", pos, res, texture, layer, 350.f, 0, 0, i));
+		CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"nWayBullet", pos, res, texture, mLayer, 330.f, 0, 0, i));
 	}
-	range == 22.5f ? range = 11.25 : range = 22.5f;
+	angle == 22.5f ? angle = 11.25 : angle = 22.5f;
 }
 
 void Enemy::circleBullet()
 {
-	ObjLayer* layer = (ObjLayer*)mLayer;
-
 	Texture* texture = FIND_TEXTURE(L"bullet0");
 	POINT res = texture->getResolution();
 	float x = float(mPos.x + ((mScale.x - res.x)) / 2);
-	PointF pos = { x, mPos.y + 150 };
+	PointF pos = { x, mPos.y + mScale.y / 2 };
 
-	static float range = 18.f;
-	for (float i = 0; i < 360.f; i += range)
+	enum { ANGLE = 18 };
+	for (int i = 0; i < 360; i += ANGLE)
 	{
-		layer->addObj(OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"circleBullet", pos, res, texture, layer, 350.f, 0, 0, i));
+		CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::E_DEFAULT_BULLET, new DefaultBullet(L"circleBullet", pos, res, texture, mLayer, 300.f, 0, 0, float(i)));
 	}
 }

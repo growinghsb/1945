@@ -35,11 +35,6 @@ public:
         return mCurrentBulletLevel;
     }
 
-    bool isMaxBulletLevel() 
-    {
-        return mCurrentBulletLevel >= MAX_BULLET_LEVEL;
-    }
-
 private:
     enum {MAX_BULLET_LEVEL = 4};
 

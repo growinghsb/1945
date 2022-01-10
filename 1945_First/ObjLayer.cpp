@@ -53,22 +53,47 @@ void ObjLayer::update()
 {
 	for (int i = 0; i < (UINT)OBJ_TYPE::END; ++i)
 	{
+		if (i == (UINT)OBJ_TYPE::ENEMY)
+		{
+			mObjs[i].size() == 0 ? bossRegen = true : bossRegen = false;
+		}
 		for (const auto element : mObjs[i])
 		{
 			element->update();
 		}
 	}
 
-	deleteInvalidObj(OBJ_TYPE::P_DEFAULT_BULLET); // 유효하지 않은 범위의 플레이어 총알 삭제
-	deleteInvalidObj(OBJ_TYPE::OBSTACLE);		  // 유효하지 않은 범위의 장애물 삭제
-	deleteInvalidObj(OBJ_TYPE::E_DEFAULT_BULLET); // 유효하지 않은 범위의 적 총알 삭제
+	// 세컨드 플레이어 위치 업데이트
+	Player* player = getPlayer();
+	PointF pPos = player->getPos();
+	POINT pScale = player->getScale();
 
-	createObstacle(); // 장애물 생성
+	float x = (float)-pScale.x;
+	float y = pPos.y + pScale.y + 20;
 
-	if (TimeManager::getInstance()->getSecond() > 3 && bossRegen)
+	for (const auto element : mObjs[(UINT)OBJ_TYPE::SECOND_PLAYER])
 	{
-		createBoss();
-		bossRegen = false;
+		element->changePos(PointF{ pPos.x + x, y });
+		x *= -1.f;
+	}
+
+	// 오브젝트 삭제
+	deleteInvalidObj(OBJ_TYPE::P_DEFAULT_BULLET);
+	deleteInvalidObj(OBJ_TYPE::OBSTACLE);
+	deleteInvalidObj(OBJ_TYPE::E_DEFAULT_BULLET);
+	deleteInvalidObj(OBJ_TYPE::SP_DEFAULT_BULLET);
+
+	// 장애물 생성
+	createObstacle();
+
+	// 보스생성
+	if (bossRegen)
+	{
+		if (mBulletLevel == MAX_BULLET_LEVEL)
+		{
+			createBoss();
+			bossRegen = false;
+		}
 	}
 
 	// 충돌체 업데이트 진행
@@ -85,6 +110,7 @@ void ObjLayer::render(HDC backDC)
 		}
 	}
 
+	// 충돌체를 껐다 켰다 할 수 있는 옵션
 	if (IS_TIC(KEY_LIST::_1))
 	{
 		isRender ? isRender = false : isRender = true;
@@ -120,45 +146,66 @@ void ObjLayer::deleteObj(OBJ_TYPE type, Obj* targetObj)
 	}
 }
 
+// 모든 불릿 텍스처 변경 후 공격력 증가 함수 호출
 void ObjLayer::bulletUpgrade()
 {
-	// 모든 불릿 텍스처 변경 후 공격력 증가 함수 호출
 	auto& list = mObjs[(UINT)OBJ_TYPE::P_DEFAULT_BULLET];
 
 	if (list.empty())
 	{
-		mBulletOffencePower += 2;
-		++mBulletLevel;
+		if (mBulletLevel != MAX_BULLET_LEVEL)
+		{
+			mBulletOffencePower += 2;
+			++mBulletLevel;
+		}
 	}
 	else
 	{
 		wstring tag(L"bullet");
 		DefaultBullet* bullet = (DefaultBullet*)list.back();
 
-		if (!bullet->isMaxBulletLevel())
+		if (mBulletLevel != MAX_BULLET_LEVEL)
 		{
 			if (getPlayer()->getTag() == L"player1")
 			{
 				tag += L"1-";
-				tag += to_wstring(++mBulletLevel);
 			}
 			else
 			{
 				tag += L"2-";
-				tag += to_wstring(++mBulletLevel);
 			}
 
-			Texture* texture = FIND_TEXTURE(tag.c_str());
-
 			mBulletOffencePower += 2;
+			tag += to_wstring(++mBulletLevel);
+			Texture* texture = FIND_TEXTURE(tag.c_str());
 
 			for (auto element : list)
 			{
 				bullet = (DefaultBullet*)element;
 
 				bullet->changeTexture(texture);
-				bullet->setOffencePowerUp(mBulletOffencePower);
 				bullet->setBulletLevel(mBulletLevel);
+				bullet->setOffencePowerUp(mBulletOffencePower);
+			}
+		}
+		else
+		{
+			if (mObjs[(UINT)OBJ_TYPE::SECOND_PLAYER].size() != MAX_SECOND_PLAYER_COUNT)
+			{
+				Player* player = getPlayer();
+				PointF pPos = player->getPos();
+				POINT pScale = player->getScale();
+
+				float x = 0.f;
+				if (mObjs[(UINT)OBJ_TYPE::SECOND_PLAYER].empty())
+				{
+					x = pPos.x - pScale.x;
+				}
+				else
+				{
+					x = pPos.x + pScale.x;
+				}
+				CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::SECOND_PLAYER, new Player(L"secondPlayer", PointF{ x, pPos.y + pScale.y + 20 }, pScale, player->getTexture(), this));
 			}
 		}
 	}
@@ -191,7 +238,10 @@ void ObjLayer::createObstacle()
 
 void ObjLayer::createBoss()
 {
-	wstring tag(L"boss0");
+	static int bossCount = 0;
+
+	wstring tag(L"boss");
+	tag += to_wstring(bossCount);
 	Texture* texture = FIND_TEXTURE(tag.c_str());
 
 	POINT res = texture->getResolution();
@@ -199,6 +249,11 @@ void ObjLayer::createBoss()
 	PointF pos = { x, float(WINDOW.bottom + 5) };
 
 	CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::ENEMY, new Enemy(texture->getTag(), pos, res, texture, this));
+	
+	if (bossCount != 2) 
+	{
+		++bossCount;
+	}
 }
 
 void ObjLayer::createBullet()
@@ -216,14 +271,10 @@ void ObjLayer::createBullet()
 		if (getPlayer()->getTag() == L"player1")
 		{
 			tag += L"1-";
-			tag += to_wstring(mBulletLevel);
-			texture = FIND_TEXTURE(tag.c_str());
 		}
 		else
 		{
 			tag += L"2-";
-			tag += to_wstring(mBulletLevel);
-			texture = FIND_TEXTURE(tag.c_str());
 		}
 	}
 	else
@@ -231,21 +282,41 @@ void ObjLayer::createBullet()
 		if (getPlayer()->getTag() == L"player1")
 		{
 			tag += L"1-";
-			tag += to_wstring(mBulletLevel);
-			texture = FIND_TEXTURE(tag.c_str());
 		}
 		else
 		{
 			tag += L"2-";
-			tag += to_wstring(mBulletLevel);
-			texture = FIND_TEXTURE(tag.c_str());
 		}
 	}
+	tag += to_wstring(mBulletLevel);
+	texture = FIND_TEXTURE(tag.c_str());
+
 	res = texture->getResolution();
 	x = float(getPlayer()->getPos().x + ((getPlayer()->getScale().x - res.x)) / 2);
 	pos = { x, getPlayer()->getPos().y };
 
 	CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::P_DEFAULT_BULLET, new DefaultBullet(L"playerBullet", pos, res, texture, this, 800.f, mBulletOffencePower, mBulletLevel, 0.f));
+}
+
+void ObjLayer::createSecondPlayerBullet()
+{
+	if (!mObjs[(UINT)OBJ_TYPE::SECOND_PLAYER].empty())
+	{
+		Texture* texture = nullptr;
+		POINT res = {};
+		float x = 0.f;
+		PointF pos = {};
+
+		for (const auto& element : mObjs[(UINT)OBJ_TYPE::SECOND_PLAYER])
+		{
+			texture = FIND_TEXTURE(L"secondBullet");
+
+			x = float(element->getPos().x + ((element->getScale().x - res.x)) / 2);
+			pos = { x, element->getPos().y };
+
+			CREATE_OBJ(EVENT_TYPE::CREATE_OBJ, OBJ_TYPE::SP_DEFAULT_BULLET, new DefaultBullet(L"secondPlayerBullet", pos, res, texture, this, 550.f, 3, 0, 0.f));
+		}
+	}
 }
 
 void ObjLayer::colliderUpdate()
@@ -289,27 +360,18 @@ void ObjLayer::deleteInvalidObj(OBJ_TYPE type)
 
 	while (iter != endIter)
 	{
-		if (type == OBJ_TYPE::E_DEFAULT_BULLET)
+		if ((*iter)->isValidLeft()  &&
+			(*iter)->isValidTop()	&&
+			(*iter)->isValidRight() &&
+			(*iter)->isValidBottom())
 		{
-			if ((*iter)->isValidDown() &&
-				(*iter)->isValidUp() && 
-				(*iter)->getPos().x < WINDOW.right &&
-				(*iter)->getPos().y < WINDOW.bottom)
-			{
-				++iter;
-				continue;
-			}
+			++iter;
 		}
 		else
 		{
-			if ((*iter)->isValidUp())
-			{
-				++iter;
-				continue;
-			}
+			delete (*iter);
+			iter = list.erase(iter);
+			endIter = list.end();
 		}
-		delete (*iter);
-		iter = list.erase(iter);
-		endIter = list.end();
 	}
 }
